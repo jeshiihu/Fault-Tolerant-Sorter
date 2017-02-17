@@ -7,9 +7,9 @@
 # 
 
 
-echo "Compiling code..."
+echo $'Compiling code...'
 javac -d . DataGenerator.java
 javac Driver.java
 
-echo "Running Driver Program"
+echo $'Running Driver Program\n'
 java Driver

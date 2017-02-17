@@ -7,8 +7,11 @@ import java.io.*;
 
 public class DataGenerator 
 {
-	public DataGenerator()
+	private String _outputFile;
+
+	public DataGenerator(String outputFile)
 	{
-		System.out.println("Data Gen");
+		_outputFile = outputFile; 
+		System.out.println("Output file: " + _outputFile);
 	}
 }
