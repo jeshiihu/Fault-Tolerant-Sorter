@@ -1,3 +1,6 @@
+###### OSX Files
+.DS_Store
+
 ###### C Gitignores
 # Object files
 *.o
