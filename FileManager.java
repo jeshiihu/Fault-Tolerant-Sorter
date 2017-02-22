@@ -18,6 +18,7 @@ public class FileManager
 		File file = new File(_fname);
 		try 
 		{
+			// https://www.mkyong.com/java/how-to-create-a-file-in-java/
 			if(!file.createNewFile())
 			{
 				file.delete(); // ensure new file
