@@ -26,7 +26,13 @@ public class DataGenerator
 		int randInts[] = new int[arrLen];
 		for(int i = 0; i < arrLen; i++)
 		{
-			int randInt = (int)Math.random();
+			// http://stackoverflow.com/questions/7961788/math-random-explained
+			// half of the max was int value so the range is possible in the range
+			int min = Integer.MIN_VALUE/2;
+			int max = Integer.MAX_VALUE/2;
+			int range = (max - min)+1;
+
+			int randInt = (int)(Math.random() * range) + min;
 			fManager.addNewLine(Integer.toString(randInt));
 		}
 	}
