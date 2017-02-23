@@ -1,3 +1,6 @@
+###### Data files
+*.txt
+
 ###### OSX Files
 .DS_Store
 
