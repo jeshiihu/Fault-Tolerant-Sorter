@@ -9,12 +9,10 @@
 
 echo $'Compiling code...'
 javac -d . FileManager.java
+javac *.java
 
-javac DataGenerator.java
-javac Driver.java
-
-# echo $'Running DataGenerator Program\n'
-# java DataGenerator
+echo $'Running DataGenerator Program\n'
+java DataGenerator test.txt 10
 
 # echo $'Running Driver Program\n'
 # java Driver
