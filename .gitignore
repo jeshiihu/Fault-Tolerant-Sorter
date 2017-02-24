@@ -1,5 +1,7 @@
-###### Data files
+###### Other files
 *.txt
+*.jnilib
+*.so
 
 ###### OSX Files
 .DS_Store
