@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Usage:
-#	./run.sh
+#	./compile.sh
 #
 # To be used to compile the files needed for Driver.java to run
 # 
@@ -18,6 +18,3 @@ javah SecondaryInsertionSort
 # gcc -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -shared -fpic -o libinsertionsort.so lib_insertionsort.c
 gcc -I$JAVA_HOME/include/ -I$JAVA_HOME/include/darwin/ -dynamiclib -o libinsertionsort.jnilib lib_insertionsort.c
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
-
-echo $'Running DataGenerator Program\n'
-java DataGenerator test.txt 10
