@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     SecondaryInsertionSort
- * Method:    insertionSort
- * Signature: (Ljava/lang/String;Ljava/lang/String;DDI)V
+ * Method:    sort
+ * Signature: (I)V
  */
-JNIEXPORT void JNICALL Java_SecondaryInsertionSort_insertionSort
-  (JNIEnv *, jobject, jstring, jstring, jdouble, jdouble, jint);
+JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
+  (JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus
 }

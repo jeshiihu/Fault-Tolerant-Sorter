@@ -3,5 +3,5 @@
 
 public class SecondaryInsertionSort
 {
-	public native void insertionSort(String fin, String fout, double pPrime, double pBackup, int timeout);
+	public native void sort(int timeout);
 }

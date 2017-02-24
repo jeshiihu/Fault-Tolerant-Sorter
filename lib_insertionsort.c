@@ -4,8 +4,8 @@
 
 // C source for the native Insertion Sort
 
-JNIEXPORT void JNICALL Java_SecondaryInsertionSort_insertionSort
-  (JNIEnv *, jobject, jstring, jstring, jdouble, jdouble, jint)
+JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
+  (JNIEnv *env, jobject object, jint timeout)
 {
 	printf("testing\n");
 }
