@@ -13,13 +13,14 @@ public class DataGenerator
 		Helper.UserIOManager ioManager = new Helper.UserIOManager();
 		
 		String fname = ioManager.getFilenameInput("Enter output filename: ", "txt");
-		int arrLen = ioManager.getIntegerInput("Enter number of integers values to be generated: ");
 
 		// create the output file
-		Helper.FileManager fManager = new Helper.FileManager(fname);
-		fManager.createOutputFile();
+		Helper.FileManager fManager = new Helper.FileManager();
+		if(!fManager.createOutputFile(fname))
+			return;
 
 		// create the array
+		int arrLen = ioManager.getIntegerInput("Enter number of integers values to be generated: ");
 		int randInts[] = new int[arrLen];
 		for(int i = 0; i < arrLen; i++)
 		{
@@ -30,7 +31,7 @@ public class DataGenerator
 			int range = (max - min)+1;
 
 			int randInt = (int)(Math.random() * range) + min;
-			fManager.addNewLine(Integer.toString(randInt));
+			fManager.addNewLine(fname, Integer.toString(randInt));
 		}
 	}
 }

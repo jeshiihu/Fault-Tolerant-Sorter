@@ -1,41 +1,53 @@
 
-package FileIO;
+package Helper;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.*;
 
 public class FileManager
 {
-	private String _fname = "";
+	public FileManager(){}
 
-	public FileManager(String fname)
+	public boolean fileExists(String fname)
 	{
-		_fname = fname;
+		File f = new File(fname);
+		return f.exists() && !f.isDirectory();
 	}
 
-	public void createOutputFile()
+	public boolean createOutputFile(String fname)
 	{
-		File file = new File(_fname);
+		File f = new File(fname);
 		try 
 		{
 			// https://www.mkyong.com/java/how-to-create-a-file-in-java/
-			if(!file.createNewFile())
+			if(!f.createNewFile())
 			{
-				file.delete(); // ensure new file
-				file.createNewFile();
+				System.out.print("File exists. Would you like to overwrite it [y/n]? ");
+				Scanner s = new Scanner(System.in);
+				if(Pattern.matches("y", s.nextLine()))
+				{
+					f.delete(); // ensure new file
+					f.createNewFile();
+				}
+				else {
+					System.out.println("No file was created");
+					return false;
+				}
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+
+		return true;
 	}
 
-	public void addNewLine(String nLine)
+	public void addNewLine(String fname, String nLine)
 	{
 		try
 		{ // true in 2nd param of file writer is to append 
-			Writer fout = new BufferedWriter(new FileWriter(_fname, true));
+			Writer fout = new BufferedWriter(new FileWriter(fname, true));
 			fout.append(nLine + "\n");
 			fout.close();
 		}
