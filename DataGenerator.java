@@ -2,7 +2,7 @@
 // integer values to be generated as command-line arguments. Integer values are to be
 // randomly generated. This program is to be written entirely in Java.
 
-import FileIO.*;
+import Helper.*;
 import java.io.*;
 import java.lang.*;
 
@@ -10,16 +10,13 @@ public class DataGenerator
 {
 	public static void main(String[] args) 
 	{
-		if(args.length != 2)
-		{
-			System.out.println("Error: arguments expected are {filename} {number of ints}");
-			return;
-		}
+		Helper.UserIOManager ioManager = new Helper.UserIOManager();
+		
+		String fname = ioManager.getFilenameInput("Enter output filename: ", "txt");
+		int arrLen = ioManager.getIntegerInput("Enter number of integers values to be generated: ");
 
-		String fname = args[0];
-		int arrLen = Integer.parseInt(args[1]); // throws exception if fails to convert
-
-		FileIO.FileManager fManager = new FileIO.FileManager(fname);
+		// create the output file
+		Helper.FileManager fManager = new Helper.FileManager(fname);
 		fManager.createOutputFile();
 
 		// create the array
