@@ -14,6 +14,9 @@ public class DataSorter
 
 		String fin = ioManager.getFilenameInput("Enter input filename: ", "txt");
 		if(!fManager.fileExists(fin))
+		{
+			
+		}
 
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");
