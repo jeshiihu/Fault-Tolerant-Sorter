@@ -21,7 +21,7 @@ public class FileManager
 			// https://www.mkyong.com/java/how-to-create-a-file-in-java/
 			if(!f.createNewFile())
 			{
-				System.out.print("File exists. Would you like to overwrite it [y/n]? ");
+				System.out.print("Output File " + fname + " exists. Would you like to overwrite it [y/n]? ");
 				Scanner s = new Scanner(System.in);
 				if(Pattern.matches("y", s.nextLine()))
 				{

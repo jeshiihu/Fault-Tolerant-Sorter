@@ -2,6 +2,7 @@
 // for primary and backup variants, and time limit
 import java.io.*;
 import java.lang.*;
+import java.util.*;
 
 public class DataSorter
 {
@@ -27,9 +28,32 @@ public class DataSorter
 
 		int timeout = Integer.parseInt(args[4]);
 
+		ArrayList<Integer> data = getInputData(fin);
+		PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
+		primarySort.sort();
+		
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");
-		int i = 2;
-		secondarySort.sort(i);
+		secondarySort.sort(data, fpSecondary);
+	}
+
+	private static ArrayList<Integer> getInputData(String fin)
+	{
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		try
+		{
+			String line = "";
+			BufferedReader buf = new BufferedReader(new FileReader(fin));
+			while((line = buf.readLine()) != null)
+			{
+				arr.add(Integer.parseInt(line));
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return arr;
 	}
 }
