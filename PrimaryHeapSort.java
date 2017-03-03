@@ -86,6 +86,6 @@ public class PrimaryHeapSort
  		float randNum = (float)Math.random()*1;
  
  		if(hazard >= 0.5 && hazard <= (0.5+hazard))
- 			throw new Exception("Primary Failed");
+ 			throw new Exception("Primary HW Failed");
 	}
 }

@@ -32,10 +32,15 @@ public class DataSorter
 
 
 		// start the sorting algorithms in parallel
+		Adjudicator adj = new Adjudicator();
+
 		try
 		{
-		PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
-		ArrayList<Integer> primSorted = primarySort.sort();
+			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
+			ArrayList<Integer> primSorted = primarySort.sort();
+
+			if(!adj.pass(primSorted))
+ 				throw new Exception("Primary Failed AT");
 		}
 		catch(Exception e)
 		{
