@@ -9,6 +9,28 @@ public class DataSorter
 	private static Helper.FileManager fManager;
 	private static Helper.UserIOManager ioManager;
 
+	public static void main(String[] args) 
+	{
+		fManager = new Helper.FileManager();
+		ioManager = new Helper.UserIOManager();
+
+		// get all the user inputs needed
+		String fin = getInputFile();
+		String fout = getOutputFile();
+		
+		float fpPrimary = ioManager.getFailureProbability("Enter failure probability of the primary variant: ");
+		float fpSecondary = ioManager.getFailureProbability("Enter failure probability of the Secondary variant: ");
+
+		int timeout = ioManager.getIntegerInput("Enter the time limit (sec):");
+
+		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
+		System.loadLibrary("insertionsort");
+		int i = 2;
+		secondarySort.sort(i);
+	}
+
+
+	// -------------------------------------------------------------------------
 	// recursive function to get the file!
 	private static String getInputFile()
 	{
@@ -21,7 +43,8 @@ public class DataSorter
 
 		return file;
 	}
-
+	
+	// recursive function to create an output file!
 	private static String getOutputFile()
 	{
 		String fout = ioManager.getFilenameInput("Enter new output filename: ", "txt");
@@ -34,17 +57,5 @@ public class DataSorter
 		return fout;
 	}
 
-	public static void main(String[] args) 
-	{
-		fManager = new Helper.FileManager();
-		ioManager = new Helper.UserIOManager();
 
-		String fin = getInputFile();
-		String fout = getOutputFile();
-
-		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
-		System.loadLibrary("insertionsort");
-		int i = 2;
-		secondarySort.sort(i);
-	}
 }
