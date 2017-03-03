@@ -33,5 +33,7 @@ public class DataGenerator
 			int randInt = (int)(Math.random() * range) + min;
 			fManager.addNewLine(fname, Integer.toString(randInt));
 		}
+
+		System.out.println("Data file has been created!\n");
 	}
 }

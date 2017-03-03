@@ -15,9 +15,6 @@ public class PrimaryHeapSort
 	{
 		Helper.UserIOManager ioManager = new Helper.UserIOManager();
 		Helper.FileManager fManager = new Helper.FileManager();
-
-		String fin = ioManager.getFilenameInput("Enter input filename: ", "txt");
-		// if(!fManager.fileExists(fin))
 	}
 
 	public void sort()
