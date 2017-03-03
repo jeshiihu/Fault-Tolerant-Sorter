@@ -1,23 +1,24 @@
 
+// acceptance test for correct sorting algorithm
+// will be using java's collection sort to test against
+import java.util.*;
+
 public class Adjudicator
 {
-	float _failure;
-	int _memAcc;
-
-	public Adjudicator(float failure, int memAccess)
-	{
-		_failure = failure;
-		_memAcc = memAccess;
-	}
+	public Adjudicator(){}
 
 	// this mimics a transient HW failure
-	public boolean pass()
+	public boolean pass(ArrayList<Integer> data)
 	{
-		float hazard = _failure*(float)_memAcc;
-		float randNum = (float)Math.random()*1;
+		// make a copy to be the sorted data!
+		ArrayList<Integer> sortedData = data;
+		Collections.sort(sortedData);
 
-		if(hazard >= 0.5 && hazard <= (0.5+hazard))
-			return false;
+		for(int i = 0; i < data.size(); i++)
+		{
+			if(sortedData.get(i) != data.get(i))
+				return false;
+		}
 
 		return true;
 	}

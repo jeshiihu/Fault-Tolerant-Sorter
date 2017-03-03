@@ -22,7 +22,7 @@ public class PrimaryHeapSort
 		_failureProb = failureProb;
 	}
 
-	public boolean sort()
+	public ArrayList<Integer> sort()
 	{
 		int size = _data.size();
 		int pivot = size/2 -1;
@@ -37,13 +37,7 @@ public class PrimaryHeapSort
 			heapify(i,0);
 		}
 
-		for(int i:_data)
-		{
-			System.out.println(Integer.toString(i));
-		}
-
-		Adjudicator adj = new Adjudicator(_failureProb, _memAccess);
-		return adj.pass();
+		return _data;
 	}
 
 	private void heapify(int size, int indx)

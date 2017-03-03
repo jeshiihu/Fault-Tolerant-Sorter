@@ -33,7 +33,7 @@ public class DataSorter
 
 		// start the sorting algorithms in parallel
 		PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
-		boolean primPass = primarySort.sort();
+		ArrayList<Integer> primSorted = primarySort.sort();
 
 		// convert to an int arr so its easier to use in jni
 		int[] dataArr = convertToPrimativeIntArr(data);
