@@ -22,7 +22,7 @@ public class PrimaryHeapSort
 		_failureProb = failureProb;
 	}
 
-	public ArrayList<Integer> sort()
+	public ArrayList<Integer> sort() throws Exception
 	{
 		int size = _data.size();
 		int pivot = size/2 -1;
@@ -36,6 +36,8 @@ public class PrimaryHeapSort
 			swapData(0,i);
 			heapify(i,0);
 		}
+
+		checkForFailure();
 
 		return _data;
 	}
@@ -76,5 +78,14 @@ public class PrimaryHeapSort
 		int temp = getDataAt(indx1);
 		setDataAt(indx1, getDataAt(indx2));
 		setDataAt(indx2, temp);
+	}
+
+	private void checkForFailure() throws Exception
+	{
+		float hazard = _failureProb*(float)_memAccess;
+ 		float randNum = (float)Math.random()*1;
+ 
+ 		if(hazard >= 0.5 && hazard <= (0.5+hazard))
+ 			throw new Exception("Primary Failed");
 	}
 }
