@@ -1,5 +1,5 @@
 
-package Helper;
+package com.jhuynh.helpers;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.*;

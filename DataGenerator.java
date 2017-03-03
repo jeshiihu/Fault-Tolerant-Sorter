@@ -2,7 +2,9 @@
 // integer values to be generated as command-line arguments. Integer values are to be
 // randomly generated. This program is to be written entirely in Java.
 
-import Helper.*;
+import com.jhuynh.helpers.FileManager;
+import com.jhuynh.helpers.UserIOManager;
+
 import java.io.*;
 import java.lang.*;
 
@@ -10,12 +12,12 @@ public class DataGenerator
 {
 	public static void main(String[] args) 
 	{
-		Helper.UserIOManager ioManager = new Helper.UserIOManager();
+		UserIOManager ioManager = new UserIOManager();
 		
 		String fname = ioManager.getFilenameInput("Enter output filename: ", "txt");
 
 		// create the output file
-		Helper.FileManager fManager = new Helper.FileManager();
+		FileManager fManager = new FileManager();
 		if(!fManager.createOutputFile(fname))
 			return;
 

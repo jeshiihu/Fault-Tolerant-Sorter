@@ -1,18 +1,20 @@
 // The data sorter must accept input and output filenames, failure probabilities
 // for primary and backup variants, and time limit
+import com.jhuynh.helpers.FileManager;
+import com.jhuynh.helpers.UserIOManager;
+
 import java.io.*;
 import java.lang.*;
-import Helper.*;
 
 public class DataSorter
 {
-	private static Helper.FileManager fManager;
-	private static Helper.UserIOManager ioManager;
+	private static FileManager fManager;
+	private static UserIOManager ioManager;
 
 	public static void main(String[] args) 
 	{
-		fManager = new Helper.FileManager();
-		ioManager = new Helper.UserIOManager();
+		fManager = new FileManager();
+		ioManager = new UserIOManager();
 
 		// get all the user inputs needed
 		String fin = getInputFile();
@@ -21,7 +23,7 @@ public class DataSorter
 		float fpPrimary = ioManager.getFailureProbability("Enter failure probability of the primary variant: ");
 		float fpSecondary = ioManager.getFailureProbability("Enter failure probability of the Secondary variant: ");
 
-		int timeout = ioManager.getIntegerInput("Enter the time limit (sec):");
+		int timeout = ioManager.getIntegerInput("Enter the time limit(sec): ");
 
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");

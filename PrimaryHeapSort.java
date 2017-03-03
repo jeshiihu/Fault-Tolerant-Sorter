@@ -3,8 +3,6 @@
 package SortingAlgorithms;
 import java.io.*;
 import java.lang.*;
-import Helper.*;
-
 
 public class PrimaryHeapSort
 {
@@ -13,8 +11,7 @@ public class PrimaryHeapSort
 	
 	public PrimaryHeapSort()
 	{
-		Helper.UserIOManager ioManager = new Helper.UserIOManager();
-		Helper.FileManager fManager = new Helper.FileManager();
+		// will need the probability		
 	}
 
 	public void sort()

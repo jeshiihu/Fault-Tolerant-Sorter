@@ -1,12 +1,13 @@
 CC = gcc
-
 SOURCES = lib_insertionsort.c
+
 
 all: main 
 
 main: lib_insertionsort.c
 	@echo '----- Compiling Code -----'
-	javac -d . *.java
+	javac -d . helpers/*.java
+	
 	javac *.java
 	javah SecondaryInsertionSort
 	
