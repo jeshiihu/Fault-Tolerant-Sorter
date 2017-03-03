@@ -49,8 +49,11 @@ public class PrimaryHeapSort
 		int right = 2*indx + 2;
 
 		// if left is greater than curr max value equate
-		if(left < size && getDataAt(right) > getDataAt(max))
+		if(left < size && getDataAt(left) > getDataAt(max))
 			max = left;
+
+		if(right < size && getDataAt(right) > getDataAt(max))
+			max = right;
 
 		// if this value was changed from the original we
 		// recursively heapify

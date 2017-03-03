@@ -14,6 +14,8 @@ public class Adjudicator
 		// make a copy to be the sorted data!
 		ArrayList<Integer> sortedData = new ArrayList<Integer>(data);
 		Collections.sort(sortedData);
+		// printArr(data);
+		// printArr(sortedData);
 
 		for(int i = 0; i < data.size(); i++)
 		{
@@ -22,5 +24,15 @@ public class Adjudicator
 		}
 
 		return true;
+	}
+
+	private void printArr(ArrayList<Integer> data)
+	{
+		System.out.println("");
+
+		for(int val : data)
+			System.out.println(Integer.toString(val));
+
+		System.out.println("");
 	}
 }
