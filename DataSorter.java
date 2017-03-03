@@ -30,8 +30,8 @@ public class DataSorter
 
 		ArrayList<Integer> data = getInputData(fin);
 		PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
-		primarySort.sort();
-		
+		boolean primPass = primarySort.sort();
+
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");
 		secondarySort.sort(data, fpSecondary);

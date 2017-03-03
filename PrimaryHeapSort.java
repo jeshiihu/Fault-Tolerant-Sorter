@@ -12,15 +12,17 @@ import java.util.*;
 
 public class PrimaryHeapSort
 {
+	float _failureProb;
 	ArrayList<Integer> _data;
 	int _memAccess = 0;
 
-	public PrimaryHeapSort(ArrayList<Integer> data)
+	public PrimaryHeapSort(ArrayList<Integer> data, float failureProb)
 	{
 		_data = data;
+		_failureProb = failureProb;
 	}
 
-	public int sort()
+	public boolean sort()
 	{
 		int size = _data.size();
 		int pivot = size/2 -1;
@@ -40,7 +42,8 @@ public class PrimaryHeapSort
 			System.out.println(Integer.toString(i));
 		}
 
-		return _memAccess;
+		Adjudicator adj = new Adjudicator(_failureProb, _memAccess);
+		return adj.pass();
 	}
 
 	private void heapify(int size, int indx)
