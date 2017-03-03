@@ -12,14 +12,12 @@ import java.util.*;
 
 public class PrimaryHeapSort
 {
-	float _failureProb;
 	ArrayList<Integer> _data;
 	int _memAccess = 0;
 
-	public PrimaryHeapSort(ArrayList<Integer> data, float failureProb)
+	public PrimaryHeapSort(ArrayList<Integer> data)
 	{
 		_data = data;
-		_failureProb = failureProb;
 	}
 
 	public int sort()
