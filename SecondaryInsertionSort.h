@@ -7,6 +7,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef SecondaryInsertionSort_MIN_PRIORITY
+#define SecondaryInsertionSort_MIN_PRIORITY 1L
+#undef SecondaryInsertionSort_NORM_PRIORITY
+#define SecondaryInsertionSort_NORM_PRIORITY 5L
+#undef SecondaryInsertionSort_MAX_PRIORITY
+#define SecondaryInsertionSort_MAX_PRIORITY 10L
 /*
  * Class:     SecondaryInsertionSort
  * Method:    sort

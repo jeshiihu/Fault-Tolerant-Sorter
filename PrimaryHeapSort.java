@@ -10,7 +10,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
-public class PrimaryHeapSort
+public class PrimaryHeapSort extends Thread
 {
 	float _failureProb;
 	ArrayList<Integer> _data;

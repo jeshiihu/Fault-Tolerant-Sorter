@@ -29,8 +29,8 @@ public class DataSorter
 
 		int timeout = Integer.parseInt(args[4]);
 
+		// get the data array from input file!
 		ArrayList<Integer> data = getInputData(fin);
-
 
 		// start the sorting algorithms in parallel
 		Adjudicator adj = new Adjudicator();
