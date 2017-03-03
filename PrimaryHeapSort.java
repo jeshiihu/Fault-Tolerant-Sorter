@@ -14,6 +14,7 @@ public class PrimaryHeapSort
 {
 	float _failureProb;
 	ArrayList<Integer> _data;
+	int _memAccess = 0;
 
 	public PrimaryHeapSort(ArrayList<Integer> data, float failureProb)
 	{
@@ -21,7 +22,7 @@ public class PrimaryHeapSort
 		_failureProb = failureProb;
 	}
 
-	public void sort()
+	public int sort()
 	{
 		int size = _data.size();
 		int pivot = size/2 -1;
@@ -40,6 +41,8 @@ public class PrimaryHeapSort
 		{
 			System.out.println(Integer.toString(i));
 		}
+
+		return _memAccess;
 	}
 
 	private void heapify(int size, int indx)
@@ -63,11 +66,13 @@ public class PrimaryHeapSort
 
 	private int getDataAt(int indx)
 	{
+		_memAccess++;
 		return _data.get(indx);
 	}
 
 	private void setDataAt(int indx, int newVal)
 	{
+		_memAccess++;
 		_data.set(indx, newVal);
 	}
 
