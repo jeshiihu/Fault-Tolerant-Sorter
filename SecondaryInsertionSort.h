@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     SecondaryInsertionSort
  * Method:    sort
- * Signature: (Ljava/util/ArrayList;F)V
+ * Signature: ([IF)V
  */
 JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
-  (JNIEnv *, jobject, jobject, jfloat);
+  (JNIEnv *, jobject, jintArray, jfloat);
 
 #ifdef __cplusplus
 }

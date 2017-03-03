@@ -4,5 +4,5 @@ import java.util.*;
 
 public class SecondaryInsertionSort
 {
-	public native void sort(ArrayList<Integer> data, float failureProb);
+	public native void sort(int[] data, float failureProb);
 }

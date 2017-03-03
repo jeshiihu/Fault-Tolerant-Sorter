@@ -29,12 +29,17 @@ public class DataSorter
 		int timeout = Integer.parseInt(args[4]);
 
 		ArrayList<Integer> data = getInputData(fin);
+
+
+		// start the sorting algorithms in parallel
 		PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
 		boolean primPass = primarySort.sort();
 
+		// convert to an int arr so its easier to use in jni
+		int[] dataArr = convertToPrimativeIntArr(data);
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");
-		secondarySort.sort(data, fpSecondary);
+		secondarySort.sort(dataArr, fpSecondary);
 	}
 
 	private static ArrayList<Integer> getInputData(String fin)
@@ -55,5 +60,14 @@ public class DataSorter
 		}
 		
 		return arr;
+	}
+
+	private static int[] convertToPrimativeIntArr(ArrayList<Integer> arr)
+	{
+		int[] conv = new int[arr.size()];
+		for(int i = 0; i < arr.size(); i++)
+			conv[i] = arr.get(i).intValue();
+
+		return conv;
 	}
 }
