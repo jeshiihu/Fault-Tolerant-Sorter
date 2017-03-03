@@ -1,6 +1,5 @@
 // primary variant
 // heap sort
-package SortingAlgorithms;
 import java.io.*;
 import java.lang.*;
 

@@ -1,63 +1,35 @@
 // The data sorter must accept input and output filenames, failure probabilities
 // for primary and backup variants, and time limit
-import com.jhuynh.helpers.FileManager;
-import com.jhuynh.helpers.UserIOManager;
-
 import java.io.*;
 import java.lang.*;
 
 public class DataSorter
 {
-	private static FileManager fManager;
-	private static UserIOManager ioManager;
+	private static FileManager fileManager;
 
 	public static void main(String[] args) 
 	{
-		fManager = new FileManager();
-		ioManager = new UserIOManager();
+		fileManager = new FileManager();
+
+		if(args.length != 5)
+		{
+			System.err.println("Invalid arguments, enter: String_fin String_fout float_primaryFailure float_secondaryFailure int_timeoutInSec");
+			return;
+		}
 
 		// get all the user inputs needed
-		String fin = getInputFile();
-		String fout = getOutputFile();
+		String fin = args[0];
+		String fout = args[1];
+		fileManager.createOutputFile(fout);
 		
-		float fpPrimary = ioManager.getFailureProbability("Enter failure probability of the primary variant: ");
-		float fpSecondary = ioManager.getFailureProbability("Enter failure probability of the Secondary variant: ");
+		float fpPrimary = Float.parseFloat(args[2]);
+		float fpSecondary = Float.parseFloat(args[3]);
 
-		int timeout = ioManager.getIntegerInput("Enter the time limit(sec): ");
+		int timeout = Integer.parseInt(args[4]);
 
 		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 		System.loadLibrary("insertionsort");
 		int i = 2;
 		secondarySort.sort(i);
 	}
-
-
-	// -------------------------------------------------------------------------
-	// recursive function to get the file!
-	private static String getInputFile()
-	{
-		String file = ioManager.getFilenameInput("Enter existing input filename: ", "txt");
-		if(!fManager.fileExists(file))
-		{
-			System.out.println("This file does not exist, please try again.\n");
-			return getInputFile();
-		}
-
-		return file;
-	}
-	
-	// recursive function to create an output file!
-	private static String getOutputFile()
-	{
-		String fout = ioManager.getFilenameInput("Enter new output filename: ", "txt");
-		if(!fManager.createOutputFile(fout))
-		{
-			System.out.println("Please try again.\n");
-			return getOutputFile();
-		}
-
-		return fout;
-	}
-
-
 }

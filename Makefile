@@ -6,8 +6,6 @@ all: main
 
 main: lib_insertionsort.c
 	@echo '----- Compiling Code -----'
-	javac -d . helpers/*.java
-	
 	javac *.java
 	javah SecondaryInsertionSort
 	
@@ -21,7 +19,7 @@ main: lib_insertionsort.c
 	
 
 clean:
-	-rm -f *.o *.so *.jnilib main
+	-rm -f *.o *.so *.jnilib *.class main
 
 run:
 	./main
