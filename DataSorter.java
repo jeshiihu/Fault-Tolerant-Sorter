@@ -11,6 +11,7 @@ public class DataSorter
 	public static void main(String[] args) 
 	{
 		fileManager = new FileManager();
+		System.loadLibrary("insertionsort");
 
 		if(args.length != 5)
 		{
@@ -41,17 +42,21 @@ public class DataSorter
 
 			if(!adj.pass(primSorted))
  				throw new Exception("Primary Failed AT");
-		}
+
+			// convert to an int arr so its easier to use in jni
+			int[] dataArr = convertToPrimativeIntArr(data);
+			SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
+			
+			int[] seconSorted = secondarySort.sort(dataArr, fpSecondary);
+			ArrayList<Integer> secSorted = convertToArrayList(seconSorted);
+
+			if(!adj.pass(secSorted))
+	 			throw new Exception("Secondary Failed AT");
+ 		}
 		catch(Exception e)
 		{
 			System.err.println(e);
 		}
-
-		// convert to an int arr so its easier to use in jni
-		int[] dataArr = convertToPrimativeIntArr(data);
-		SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
-		System.loadLibrary("insertionsort");
-		secondarySort.sort(dataArr, fpSecondary);
 	}
 
 	private static ArrayList<Integer> getInputData(String fin)
@@ -81,5 +86,14 @@ public class DataSorter
 			conv[i] = arr.get(i).intValue();
 
 		return conv;
+	}
+
+	private static ArrayList<Integer> convertToArrayList(int data[])
+	{
+		ArrayList<Integer> newArr = new ArrayList<Integer>(data.length);
+		for(int val : data)
+			newArr.add(val);
+
+		return newArr;
 	}
 }
