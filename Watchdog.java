@@ -23,7 +23,6 @@ Thread watched;
 	 */
 	public void run() {
 		watched.stop();
-		System.out.println("You're dead!");
+		System.out.println("timed out");
 	}
-
 }

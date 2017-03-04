@@ -40,7 +40,7 @@ public class DataSorter
 			Timer t = new Timer();
 			// System.out.println("create prim wd");
 			Watchdog wd = new Watchdog(primarySort);
-			t.schedule(wd, 1);			
+			t.schedule(wd, timeout);			
 			primarySort.start();
 			primarySort.join();
 			t.cancel();
@@ -60,7 +60,7 @@ public class DataSorter
 			System.err.println(e);
 			restoreCheckpoint(fin, data);
 
-			System.out.println("Attempting to sort using backup\n");
+			System.out.println("\nAttempting to sort using backup");
 
 			try // now try the secondary
 			{   // convert to an int arr so its easier to use in jni
