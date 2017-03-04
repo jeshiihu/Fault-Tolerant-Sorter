@@ -22,7 +22,7 @@ public class PrimaryHeapSort extends Thread
 		_failureProb = failureProb;
 	}
 
-	public ArrayList<Integer> sort() throws Exception
+	public void sort() throws Exception
 	{
 		int size = _data.size();
 		int pivot = size/2 -1;
@@ -38,8 +38,6 @@ public class PrimaryHeapSort extends Thread
 		}
 
 		checkForFailure();
-
-		return _data;
 	}
 
 	private void heapify(int size, int indx)

@@ -7,6 +7,12 @@ public class FileManager
 {
 	public FileManager(){}
 
+	public boolean validTxtFormat(String fname)
+	{
+		String p = "(.+)(\\.txt)";
+		return Pattern.matches(p, fname);
+	}
+
 	public boolean fileExists(String fname)
 	{
 		File f = new File(fname);
@@ -21,22 +27,14 @@ public class FileManager
 			// https://www.mkyong.com/java/how-to-create-a-file-in-java/
 			if(!f.createNewFile())
 			{
-				System.out.print("Output File " + fname + " exists. Would you like to overwrite it [y/n]? ");
-				Scanner s = new Scanner(System.in);
-				if(Pattern.matches("y", s.nextLine()))
-				{
-					f.delete(); // ensure new file
-					f.createNewFile();
-				}
-				else {
-					System.out.println("No file was created");
-					return false;
-				}
+				f.delete(); // ensure new file
+				f.createNewFile();
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return false;
 		}
 
 		return true;

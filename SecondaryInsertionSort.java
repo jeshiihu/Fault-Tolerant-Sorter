@@ -4,5 +4,5 @@ import java.util.*;
 
 public class SecondaryInsertionSort extends Thread
 {
-	public native int[] sort(int[] data, float failureProb);
+	public native void sort(int[] data, float failureProb);
 }

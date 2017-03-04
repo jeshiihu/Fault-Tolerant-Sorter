@@ -15,12 +15,12 @@ public class DataSorter
 
 		if(args.length != 5)
 		{
-			System.err.println("Invalid arguments, enter: String_fin String_fout float_primaryFailure float_secondaryFailure int_timeoutInSec");
+			System.err.println("Error, please enter:\n  String_fin(.txt) String_fout(.txt) float_primaryFailure[0,1] float_secondaryFailure[0,1] int_timeout(ms)");
 			return;
 		}
 
 		// get all the user inputs needed
-		String fin = args[0];
+		String fin = args[0]; // our checkpoint file
 		String fout = args[1];
 		fileManager.createOutputFile(fout);
 		
@@ -30,53 +30,66 @@ public class DataSorter
 		int timeout = Integer.parseInt(args[4]);
 
 		// get the data array from input file!
-		ArrayList<Integer> data = getInputData(fin);
+		ArrayList<Integer> data = new ArrayList<Integer>();
+		restoreCheckpoint(fin, data);
 
-		// start the sorting algorithms in parallel
-		Adjudicator adj = new Adjudicator();
-
-		try
+		try // try the primary first!
 		{
 			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
-			ArrayList<Integer> primSorted = primarySort.sort();
+			primarySort.sort();
 
-			if(!adj.pass(primSorted))
+			Adjudicator adj = new Adjudicator();
+			if(!adj.pass(data))
  				throw new Exception("Primary Failed AT");
-
-			// convert to an int arr so its easier to use in jni
-			int[] dataArr = convertToPrimativeIntArr(data);
-			SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
-			
-			int[] seconSorted = secondarySort.sort(dataArr, fpSecondary);
-			ArrayList<Integer> secSorted = convertToArrayList(seconSorted);
-
-			if(!adj.pass(secSorted))
-	 			throw new Exception("Secondary Failed AT");
  		}
 		catch(Exception e)
 		{
 			System.err.println(e);
+			restoreCheckpoint(fin, data);
+
+			try // now try the secondary
+			{   // convert to an int arr so its easier to use in jni
+				int[] dataArr = convertToPrimativeIntArr(data);
+				SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
+
+				Adjudicator adj = new Adjudicator();
+				System.out.println("BEFORE");
+				adj.printArr(data);
+				
+				secondarySort.sort(dataArr, fpSecondary);
+				data = convertToArrayList(dataArr);
+				
+				System.out.println("AFTER");
+				adj.printArr(data);
+
+				if(!adj.pass(data))
+		 			throw new Exception("Secondary Failed AT");
+	 		}
+	 		catch(Exception er)
+	 		{
+	 			System.err.println(er);
+	 			System.out.println("The program will now terminate");
+	 			System.exit(-1);
+	 		}
 		}
 	}
 
-	private static ArrayList<Integer> getInputData(String fin)
+	private static void restoreCheckpoint(String fin, ArrayList<Integer> data)
 	{
-		ArrayList<Integer> arr = new ArrayList<Integer>();
+		data.clear();
 		try
 		{
 			String line = "";
 			BufferedReader buf = new BufferedReader(new FileReader(fin));
 			while((line = buf.readLine()) != null)
 			{
-				arr.add(Integer.parseInt(line));
+				data.add(Integer.parseInt(line));
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
-		return arr;
 	}
 
 	private static int[] convertToPrimativeIntArr(ArrayList<Integer> arr)

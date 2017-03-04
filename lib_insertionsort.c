@@ -7,21 +7,20 @@
 
 // C source for the native Insertion Sort
 // http://quiz.geeksforgeeks.org/insertion-sort/
-jint* insertionSort(jint *data, jsize size);
-int getDataAt(jint *data, int indx);
-void setData(jint *data, int indx, int newVal);
+void insertionSort(jint *data, jsize size);
+jint getDataAt(jint *data, jint indx);
+void setData(jint *data, jint indx, jint newVal);
 void checkForFailure(JNIEnv *env, jfloat fp);
-jintArray convertToJintArray(JNIEnv *env, jint *data, jsize size);
-
 
 int _memAccess = 0;
 
-
-JNIEXPORT jintArray JNICALL Java_SecondaryInsertionSort_sort
+JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
   (JNIEnv *env, jobject object, jintArray data, jfloat failureProb)
 {
 	jboolean *is_copy = 0;
 	jsize size = (*env)->GetArrayLength(env, data);
+
+	// ensure that isccopy is 0 so it will change it in memory
   	jint *dataCopy = (jint *) (*env)->GetIntArrayElements(env, data, is_copy);
 
   	if (dataCopy == NULL){
@@ -29,40 +28,39 @@ JNIEXPORT jintArray JNICALL Java_SecondaryInsertionSort_sort
     	exit(0);
   	}
 
-  	jint *sortedData = insertionSort(dataCopy, size);
+  	insertionSort(dataCopy,size);
   	checkForFailure(env, failureProb);
-
-  	return convertToJintArray(env, sortedData, size);
+  	(*env)->ReleaseIntArrayElements(env, data, dataCopy, JNI_COMMIT);
 }
 
-jint* insertionSort(jint *data, jsize size)
+void insertionSort(jint *data, jsize size)
 {
 	int i, j, key;
 	for(i = 1; i < size; i++)
 	{
 		key = getDataAt(data, i);
 		j = i-1;
-	}
 
-	// vals greater than key move to position -1
-	while(j >= 0 && getDataAt(data, j) > key)
-	{
-		setData(data, j+1, getDataAt(data, j));
-		j = j-1;
-	}
+		// vals greater than key move to position -1
+		// printf("%d >= 0 && %d > %d\n", j, getDataAt(data, j), key);
+		while(j >= 0 && getDataAt(data, j) > key)
+		{
+			setData(data, j+1, getDataAt(data, j));
+			j = j-1;
+		}
 
-	// put the key back to its correct spot!
-	setData(data, j+1, key);
-	return data;
+		// put the key back to its correct spot!
+		setData(data, j+1, key);
+	}
 }
 
-int getDataAt(jint *data, int indx)
+int getDataAt(jint *data, jint indx)
 {
 	_memAccess++;
 	return data[indx];	
 }
 
-void setData(jint *data, int indx, int newVal)
+void setData(jint *data, jint indx, jint newVal)
 {
 	_memAccess++;
 	data[indx] = newVal;
@@ -81,20 +79,3 @@ void checkForFailure(JNIEnv *env, jfloat fp)
  		(*env)->ThrowNew(env, Exception, "Secondary HW Failed");
  	}
 }
-
-jintArray convertToJintArray(JNIEnv *env, jint *data, jsize size)
-{
-	// create the new jintArray and then a new jint* to coppy
-	jintArray newArr = (*env)->NewIntArray(env, size);
-	jint *new = (*env)->GetIntArrayElements(env, newArr, (void*)NULL);
-
-	int i;
-	for(i = 0; i < size; i++)
-	{
-		new[i] = data[i];
-	}
-
-	(*env)->ReleaseIntArrayElements(env, newArr, new, (jint)NULL);
-	return newArr;
-}
-

@@ -26,7 +26,7 @@ public class Adjudicator
 		return true;
 	}
 
-	private void printArr(ArrayList<Integer> data)
+	public void printArr(ArrayList<Integer> data)
 	{
 		System.out.println("");
 
