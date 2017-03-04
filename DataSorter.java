@@ -37,11 +37,12 @@ public class DataSorter
 		{
 			System.out.println("Attempting to sort using primary\n");
 			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
+			
 			Timer t = new Timer();
-			// System.out.println("create prim wd");
 			Watchdog wd = new Watchdog(primarySort);
 			t.schedule(wd, timeout);			
 			primarySort.start();
+			
 			primarySort.join();
 			t.cancel();
 
@@ -57,18 +58,29 @@ public class DataSorter
  		}
 		catch(Exception e)
 		{
-			System.err.println(e);
-			restoreCheckpoint(fin, data);
+			try 
+			{   // now try the secondary
+				System.err.println(e);
+				restoreCheckpoint(fin, data);
+				System.out.println("\nAttempting to sort using backup");
 
-			System.out.println("\nAttempting to sort using backup");
+				int dataArr[] = convertDataToPrimIntArr(data);
+				SecondaryInsertionSort secondarySort = new SecondaryInsertionSort(dataArr, fpSecondary);
 
-			try // now try the secondary
-			{   // convert to an int arr so its easier to use in jni
-				int[] dataArr = convertToPrimativeIntArr(data);
-				SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
-
-				secondarySort.sort(dataArr, fpSecondary);
+				Timer t = new Timer();
+				Watchdog wd = new Watchdog(secondarySort);
+				t.schedule(wd, timeout);			
+				secondarySort.start();
+				
+				secondarySort.join();
+				t.cancel();
 				data = convertToArrayList(dataArr);
+
+				if(secondarySort.timedOut())
+					throw new Exception("Secondary timed out");
+
+				if(secondarySort.hwFailure())
+					throw new Exception("Secondary HW Failure");
 
 				Adjudicator adj = new Adjudicator();
 				if(!adj.pass(data))
@@ -110,7 +122,8 @@ public class DataSorter
 		}
 	}
 
-	private static int[] convertToPrimativeIntArr(ArrayList<Integer> arr)
+	// convert to an int arr so its easier to use in jni
+	private static int[] convertDataToPrimIntArr(ArrayList<Integer> arr)
 	{
 		int[] conv = new int[arr.size()];
 		for(int i = 0; i < arr.size(); i++)

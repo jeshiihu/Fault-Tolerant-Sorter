@@ -10,11 +10,11 @@
 void insertionSort(jint *data, jsize size);
 jint getDataAt(jint *data, jint indx);
 void setData(jint *data, jint indx, jint newVal);
-void checkForFailure(JNIEnv *env, jfloat fp);
+jboolean checkForFailure(JNIEnv *env, jfloat fp);
 
 int _memAccess = 0;
 
-JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
+JNIEXPORT jboolean JNICALL Java_SecondaryInsertionSort_sort
   (JNIEnv *env, jobject object, jintArray data, jfloat failureProb)
 {
 	jboolean *is_copy = 0;
@@ -29,8 +29,8 @@ JNIEXPORT void JNICALL Java_SecondaryInsertionSort_sort
   	}
 
   	insertionSort(dataCopy,size);
-  	checkForFailure(env, failureProb);
   	(*env)->ReleaseIntArrayElements(env, data, dataCopy, JNI_COMMIT);
+  	return checkForFailure(env, failureProb);
 }
 
 void insertionSort(jint *data, jsize size)
@@ -66,16 +66,15 @@ void setData(jint *data, jint indx, jint newVal)
 	data[indx] = newVal;
 }
 
-void checkForFailure(JNIEnv *env, jfloat fp)
+jboolean checkForFailure(JNIEnv *env, jfloat fp)
 {
+	jboolean failed = 0;
 	float hazard = fp*(float)_memAccess;
 
 	srand(time(NULL));
  	float randNum = ((float)rand()/(float)(RAND_MAX))*1; // 1 indicates max
- 
  	if(hazard >= 0.5 && hazard <= (0.5+hazard))
- 	{
- 		jclass Exception = (*env)->FindClass(env, "java/lang/Exception");
- 		(*env)->ThrowNew(env, Exception, "Secondary HW Failed");
- 	}
+		failed = 1;
+
+	return failed;
 }

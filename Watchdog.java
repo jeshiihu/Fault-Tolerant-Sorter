@@ -23,6 +23,5 @@ Thread watched;
 	 */
 	public void run() {
 		watched.stop();
-		System.out.println("timed out");
 	}
 }
