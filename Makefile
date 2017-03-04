@@ -19,7 +19,7 @@ main: lib_insertionsort.c
 	
 
 clean:
-	-rm -f *.o *.so *.jnilib *.class main
+	-rm -f *.o *.so *.jnilib *.class *.txt main
 
 run:
 	./main

@@ -40,6 +40,12 @@ public class FileManager
 		return true;
 	}
 
+	public void deleteFile(String fname)
+	{
+		File f = new File(fname);
+		f.delete();
+	}
+
 	public void addNewLine(String fname, String nLine)
 	{
 		try

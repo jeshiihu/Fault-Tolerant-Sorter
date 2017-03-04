@@ -52,26 +52,27 @@ public class DataSorter
 				int[] dataArr = convertToPrimativeIntArr(data);
 				SecondaryInsertionSort secondarySort = new SecondaryInsertionSort();
 
-				Adjudicator adj = new Adjudicator();
-				System.out.println("BEFORE");
-				adj.printArr(data);
-				
 				secondarySort.sort(dataArr, fpSecondary);
 				data = convertToArrayList(dataArr);
-				
-				System.out.println("AFTER");
-				adj.printArr(data);
 
+				Adjudicator adj = new Adjudicator();
 				if(!adj.pass(data))
 		 			throw new Exception("Secondary Failed AT");
 	 		}
 	 		catch(Exception er)
 	 		{
 	 			System.err.println(er);
-	 			System.out.println("The program will now terminate");
+
+	 			System.out.println("...deleting output file");
+	 			fileManager.deleteFile(fout);
+
+	 			System.out.println("...terminating program");
 	 			System.exit(-1);
 	 		}
 		}
+
+		for(int val : data)
+			fileManager.addNewLine(fout, Integer.toString(val));
 	}
 
 	private static void restoreCheckpoint(String fin, ArrayList<Integer> data)
