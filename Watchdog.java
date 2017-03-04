@@ -12,7 +12,7 @@ import java.util.TimerTask;
  */
 public class Watchdog extends TimerTask {
 
-Thread watched;
+	Thread watched;
 
 	public Watchdog (Thread target){
 		// Constructor sets the class variable 'watched'
