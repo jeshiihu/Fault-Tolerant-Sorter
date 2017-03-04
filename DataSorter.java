@@ -32,11 +32,24 @@ public class DataSorter
 		// get the data array from input file!
 		ArrayList<Integer> data = new ArrayList<Integer>();
 		restoreCheckpoint(fin, data);
-
+		
 		try // try the primary first!
 		{
+			System.out.println("Attempting to sort using primary\n");
 			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
-			primarySort.sort();
+			Timer t = new Timer();
+			// System.out.println("create prim wd");
+			Watchdog wd = new Watchdog(primarySort);
+			t.schedule(wd, 1);			
+			primarySort.start();
+			primarySort.join();
+			t.cancel();
+
+			if(primarySort.timedOut())
+				throw new Exception("Primary timed out");
+
+			if(primarySort.hwFailure())
+				throw new Exception("Primary HW Failure");
 
 			Adjudicator adj = new Adjudicator();
 			if(!adj.pass(data))
@@ -46,6 +59,8 @@ public class DataSorter
 		{
 			System.err.println(e);
 			restoreCheckpoint(fin, data);
+
+			System.out.println("Attempting to sort using backup\n");
 
 			try // now try the secondary
 			{   // convert to an int arr so its easier to use in jni
@@ -73,6 +88,8 @@ public class DataSorter
 
 		for(int val : data)
 			fileManager.addNewLine(fout, Integer.toString(val));
+		
+		System.out.println("Successfully sorted data to " + fout + "\n");
 	}
 
 	private static void restoreCheckpoint(String fin, ArrayList<Integer> data)

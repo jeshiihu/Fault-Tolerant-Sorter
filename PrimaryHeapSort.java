@@ -13,6 +13,8 @@ import java.util.*;
 public class PrimaryHeapSort extends Thread
 {
 	float _failureProb;
+	boolean _fail;
+	boolean _thDeath;
 	ArrayList<Integer> _data;
 	int _memAccess = 0;
 
@@ -20,24 +22,34 @@ public class PrimaryHeapSort extends Thread
 	{
 		_data = data;
 		_failureProb = failureProb;
+		_fail = false;
+		_thDeath = false;
 	}
 
-	public void sort() throws Exception
+	public void run() throws ThreadDeath
 	{
-		int size = _data.size();
-		int pivot = size/2 -1;
-
-		for(int i = pivot; i >= 0; i--)
-			heapify(size,i);
-
-		// exact an element on the heap
-		for(int i = size-1; i >=0; i--)
+		try
 		{
-			swapData(0,i);
-			heapify(i,0);
-		}
+			int size = _data.size();
+			int pivot = size/2 -1;
 
-		checkForFailure();
+			for(int i = pivot; i >= 0; i--)
+				heapify(size,i);
+
+			// exact an element on the heap
+			for(int i = size-1; i >=0; i--)
+			{
+				swapData(0,i);
+				heapify(i,0);
+			}
+
+			checkForFailure();
+		}
+		catch(ThreadDeath td)
+		{
+			_thDeath = true;
+			throw new ThreadDeath();
+		}
 	}
 
 	private void heapify(int size, int indx)
@@ -81,12 +93,25 @@ public class PrimaryHeapSort extends Thread
 		setDataAt(indx2, temp);
 	}
 
-	private void checkForFailure() throws Exception
+	private void checkForFailure()
 	{
 		float hazard = _failureProb*(float)_memAccess;
  		float randNum = (float)Math.random()*1;
  
  		if(hazard >= 0.5 && hazard <= (0.5+hazard))
- 			throw new Exception("Primary HW Failed");
+	 		_fail = true;
+	}
+
+	// since its hard to return a var or throw inside a thread
+	// this function allows us to check for timeout
+	public boolean timedOut()
+	{
+		return _thDeath;
+	}
+
+	// this function allows us to check for hardware failure
+	public boolean hwFailure()
+	{
+		return _fail;
 	}
 }
