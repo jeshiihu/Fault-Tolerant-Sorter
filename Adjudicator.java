@@ -1,6 +1,11 @@
 
 // acceptance test for correct sorting algorithm
 // will be using java's collection sort to test against
+// ===================================================
+// other potential options are
+// - to do a check by element
+// - do a checksum
+
 import java.util.*;
 import java.io.*;
 
@@ -8,14 +13,11 @@ public class Adjudicator
 {
 	public Adjudicator(){}
 
-	// this mimics a transient HW failure
 	public boolean pass(ArrayList<Integer> data)
 	{
 		// make a copy to be the sorted data!
 		ArrayList<Integer> sortedData = new ArrayList<Integer>(data);
 		Collections.sort(sortedData);
-		// printArr(data);
-		// printArr(sortedData);
 
 		for(int i = 0; i < data.size(); i++)
 		{
@@ -26,6 +28,7 @@ public class Adjudicator
 		return true;
 	}
 
+	// for testing purposes to print an array!
 	public void printArr(ArrayList<Integer> data)
 	{
 		System.out.println("");

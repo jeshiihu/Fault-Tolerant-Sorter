@@ -104,8 +104,6 @@ public class PrimaryHeapSort extends Thread
 	{
 		float hazard = _failureProb*(float)_memAccess;
  		float randNum = (float)Math.random()*1;
- 		System.out.println("rand float " + Float.toString(randNum));
- 		System.out.println("hazard " + Float.toString(hazard));
 
  		if(hazard >= 0.5 && hazard <= (0.5+hazard))
 	 		_fail = true;

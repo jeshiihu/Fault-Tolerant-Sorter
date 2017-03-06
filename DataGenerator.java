@@ -15,16 +15,21 @@ public class DataGenerator
 			return;
 		}
 
-		String fname = args[0];
+		String fname = args[0]; 
+		int arrLen = Integer.parseInt(args[1]);
+
+		FileManager fManager = new FileManager();
+		if(!fManager.validTxtFormat(fname))
+		{ // must be proper format
+			System.err.println("Error, file names must be in the format fname.txt");
+			return;
+		}		
 
 		// create the output file
-		FileManager fManager = new FileManager();
 		if(!fManager.createOutputFile(fname))
 			return;
 
 		// create the array
-		int arrLen = Integer.parseInt(args[1]);
-
 		int randInts[] = new int[arrLen];
 		for(int i = 0; i < arrLen; i++)
 		{
@@ -38,6 +43,6 @@ public class DataGenerator
 			fManager.addNewLine(fname, Integer.toString(randInt));
 		}
 
-		System.out.println("Data file has been created!\n");
+		System.out.println("Data file has been created!");
 	}
 }

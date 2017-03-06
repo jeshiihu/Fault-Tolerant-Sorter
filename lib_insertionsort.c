@@ -7,11 +7,14 @@
 
 // C source for the native Insertion Sort
 // http://quiz.geeksforgeeks.org/insertion-sort/
+
+// pre-declaration of the functions used
 void insertionSort(jint *data, jsize size);
 jint getDataAt(jint *data, jint indx);
 void setData(jint *data, jint indx, jint newVal);
 jboolean checkForFailure(JNIEnv *env, jfloat fp);
 
+// global var to keep track of mem accesses
 int _memAccess = 0;
 
 JNIEXPORT jboolean JNICALL Java_SecondaryInsertionSort_sort
@@ -29,7 +32,8 @@ JNIEXPORT jboolean JNICALL Java_SecondaryInsertionSort_sort
   	}
 
   	insertionSort(dataCopy,size);
-  	(*env)->ReleaseIntArrayElements(env, data, dataCopy, JNI_COMMIT);
+  	// releasing the int array copies back into memory
+  	(*env)->ReleaseIntArrayElements(env, data, dataCopy, 0);
   	return checkForFailure(env, failureProb);
 }
 
@@ -42,7 +46,6 @@ void insertionSort(jint *data, jsize size)
 		j = i-1;
 
 		// vals greater than key move to position -1
-		// printf("%d >= 0 && %d > %d\n", j, getDataAt(data, j), key);
 		while(j >= 0 && getDataAt(data, j) > key)
 		{
 			setData(data, j+1, getDataAt(data, j));
@@ -66,6 +69,7 @@ void setData(jint *data, jint indx, jint newVal)
 	data[indx] = newVal;
 }
 
+// mimics a hardware failure
 jboolean checkForFailure(JNIEnv *env, jfloat fp)
 {
 	jboolean failed = 0;

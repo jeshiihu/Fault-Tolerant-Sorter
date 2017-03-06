@@ -7,6 +7,7 @@ public class FileManager
 {
 	public FileManager(){}
 
+	// for the files we expect a .txt file only!!
 	public boolean validTxtFormat(String fname)
 	{
 		String p = "(.+)(\\.txt)";

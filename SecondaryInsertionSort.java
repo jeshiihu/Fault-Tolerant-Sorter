@@ -15,6 +15,8 @@ public class SecondaryInsertionSort extends Thread
 		_fp = fp;
 	}
 
+	// native c hook that calls the sorting (insertion) method in C
+	// the boolean returned is whether there was a HW Failure
 	private native boolean sort(int[] data, float failureProb);
 
 	public void run()
