@@ -4,10 +4,10 @@ import java.util.*;
 
 public class SecondaryInsertionSort extends Thread
 {
-	int[] _data;
-	float _fp;
-	boolean _failed;
-	boolean _timedout;
+	private int[] _data;
+	private float _fp;
+	private boolean _failed;
+	private boolean _timedout;
 
 	public SecondaryInsertionSort(int[] data, float fp)
 	{
@@ -15,7 +15,7 @@ public class SecondaryInsertionSort extends Thread
 		_fp = fp;
 	}
 
-	public native boolean sort(int[] data, float failureProb);
+	private native boolean sort(int[] data, float failureProb);
 
 	public void run()
 	{

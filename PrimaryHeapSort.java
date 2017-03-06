@@ -12,11 +12,11 @@ import java.util.*;
 
 public class PrimaryHeapSort extends Thread
 {
-	float _failureProb;
-	boolean _fail;
-	boolean _thDeath;
-	ArrayList<Integer> _data;
-	int _memAccess = 0;
+	private float _failureProb;
+	private boolean _fail;
+	private boolean _thDeath;
+	private ArrayList<Integer> _data;
+	private int _memAccess = 0;
 
 	public PrimaryHeapSort(ArrayList<Integer> data, float failureProb)
 	{
