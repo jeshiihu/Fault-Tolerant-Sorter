@@ -39,7 +39,7 @@ public class DataSorter
 		
 		try // try the primary first!
 		{
-			System.out.println("Attempting to sort using primary\n");
+			System.out.println("Attempting to sort using primary");
 			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
 			
 			Timer t = new Timer(); // created the thread and timeout
@@ -112,7 +112,7 @@ public class DataSorter
 		for(int val : data)
 			fileManager.addNewLine(fout, Integer.toString(val));
 		
-		System.out.println("Successfully sorted data to " + fout + "\n");
+		System.out.println("Successfully sorted data to " + fout);
 	}
 
 	// on failure restore the data to original checkpoint (input file)
