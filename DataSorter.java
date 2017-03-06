@@ -22,14 +22,18 @@ public class DataSorter
 		// get all the user inputs needed
 		String fin = args[0]; // our checkpoint file
 		String fout = args[1];
-		fileManager.createOutputFile(fout);
-		
+		if(!fileManager.validTxtFormat(fin) || !fileManager.validTxtFormat(fout))
+		{
+			System.err.println("Error, file names must be in the format fname.txt");
+			return;
+		}
+
 		float fpPrimary = Float.parseFloat(args[2]);
 		float fpSecondary = Float.parseFloat(args[3]);
-
 		int timeout = Integer.parseInt(args[4]);
 
 		// get the data array from input file!
+		fileManager.createOutputFile(fout);
 		ArrayList<Integer> data = new ArrayList<Integer>();
 		restoreCheckpoint(fin, data);
 		
@@ -38,7 +42,7 @@ public class DataSorter
 			System.out.println("Attempting to sort using primary\n");
 			PrimaryHeapSort primarySort = new PrimaryHeapSort(data, fpPrimary);
 			
-			Timer t = new Timer();
+			Timer t = new Timer(); // created the thread and timeout
 			Watchdog wd = new Watchdog(primarySort);
 			t.schedule(wd, timeout);			
 			primarySort.start();
@@ -46,6 +50,7 @@ public class DataSorter
 			primarySort.join();
 			t.cancel();
 
+			// failures for the primary Variant
 			if(primarySort.timedOut())
 				throw new Exception("Primary timed out");
 
@@ -57,25 +62,30 @@ public class DataSorter
  				throw new Exception("Primary Failed AT");
  		}
 		catch(Exception e)
-		{
+		{	// primary failed
 			try 
 			{   // now try the secondary
 				System.err.println(e);
 				restoreCheckpoint(fin, data);
 				System.out.println("\nAttempting to sort using backup");
 
+				// we convert to an int[] since it is easier to handle
+				// in the native c function
 				int dataArr[] = convertDataToPrimIntArr(data);
 				SecondaryInsertionSort secondarySort = new SecondaryInsertionSort(dataArr, fpSecondary);
 
-				Timer t = new Timer();
+				Timer t = new Timer(); // create the thread and timeout
 				Watchdog wd = new Watchdog(secondarySort);
 				t.schedule(wd, timeout);			
 				secondarySort.start();
 				
 				secondarySort.join();
 				t.cancel();
+				
+				// convert back to an ArrayList
 				data = convertToArrayList(dataArr);
 
+				// failures for the secondary variant
 				if(secondarySort.timedOut())
 					throw new Exception("Secondary timed out");
 
@@ -87,7 +97,7 @@ public class DataSorter
 		 			throw new Exception("Secondary Failed AT");
 	 		}
 	 		catch(Exception er)
-	 		{
+	 		{	// shut it down
 	 			System.err.println(er);
 
 	 			System.out.println("...deleting output file");
@@ -98,12 +108,14 @@ public class DataSorter
 	 		}
 		}
 
+		// write result to the output file
 		for(int val : data)
 			fileManager.addNewLine(fout, Integer.toString(val));
 		
 		System.out.println("Successfully sorted data to " + fout + "\n");
 	}
 
+	// on failure restore the data to original checkpoint (input file)
 	private static void restoreCheckpoint(String fin, ArrayList<Integer> data)
 	{
 		data.clear();
@@ -132,6 +144,7 @@ public class DataSorter
 		return conv;
 	}
 
+	// conversion back from primative int[] to ArrayList
 	private static ArrayList<Integer> convertToArrayList(int data[])
 	{
 		ArrayList<Integer> newArr = new ArrayList<Integer>(data.length);
