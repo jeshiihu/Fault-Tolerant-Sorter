@@ -1,8 +1,7 @@
 // primary variant
 // heap sort
 
-// Code for heapsort based off of this C code
-// http://www.algorithmist.com/index.php/Heap_sort.c
+// https://github.com/jeshiihu/virtualMemory/blob/master/heapsort.c
 // in-place and non recursive algorithm
 // ======
 // the sort is modified to keep track of the failure
@@ -32,16 +31,15 @@ public class PrimaryHeapSort extends Thread
 		try
 		{
 			int size = _data.size();
-			int pivot = size/2 -1;
+			int pivot = (size-2)/2;
 
 			for(int i = pivot; i >= 0; i--)
-				heapify(size,i);
+				downHeap(size, i);
 
-			// exact an element on the heap
-			for(int i = size-1; i >=0; i--)
+			for(int i = 0; i < size; i++)
 			{
-				swapData(0,i);
-				heapify(i,0);
+				swapData(size-i-1, 0);
+				downHeap(size-i-1,0);
 			}
 
 			checkForFailure();
@@ -53,26 +51,34 @@ public class PrimaryHeapSort extends Thread
 		}
 	}
 
-	private void heapify(int size, int indx)
+	private void downHeap(int n, int i)
 	{
-		int max = indx;
-		int left = 2*indx + 1;
-		int right = 2*indx + 2;
-
-		// if left is greater than curr max value equate
-		if(left < size && getDataAt(left) > getDataAt(max))
-			max = left;
-
-		if(right < size && getDataAt(right) > getDataAt(max))
-			max = right;
-
-		// if this value was changed from the original we
-		// recursively heapify
-		if(max != indx)
+		while(true)
 		{
-			swapData(indx, max);
-			heapify(size,max);
+			int j = getMax(n, i, 2*i+1, 2*i+2);
+			if(j == i)
+				break;
+			
+			swapData(i, j);
+			i = j;
 		}
+	}
+
+	private int getMax(int n, int i, int j, int k)
+	{
+		if(j > n)
+			return i;
+
+		if(j < n && getDataAt(j) > getDataAt(i))
+			i = j;
+
+		if(k > n)
+			return i;
+
+		if(k < n && getDataAt(k) > getDataAt(i))
+			i = k;
+
+		return i;
 	}
 
 	private int getDataAt(int indx)
