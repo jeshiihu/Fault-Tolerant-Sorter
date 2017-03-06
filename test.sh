@@ -10,7 +10,7 @@ java DataSorter data10.txt output2.txt 0.99 0.0001 1000
 
 echo $'\n=== 3. Primary timeout ==='
 java DataGenerator data500.txt 500
-java DataSorter data500.txt output3.txt 0.99 0.0001 1
+java DataSorter data500.txt output3.txt 0.99 0.000001 1
 
 
 echo $'\n=== 4. Secondary passes ==='
