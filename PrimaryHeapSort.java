@@ -1,8 +1,9 @@
 // primary variant
 // heap sort
 
-// Code for heapsort heavily taken from this source
-// http://quiz.geeksforgeeks.org/heap-sort/
+// Code for heapsort based off of this C code
+// http://www.algorithmist.com/index.php/Heap_sort.c
+// in-place and non recursive algorithm
 // ======
 // the sort is modified to keep track of the failure
 
