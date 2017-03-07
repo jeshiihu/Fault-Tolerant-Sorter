@@ -13,6 +13,10 @@ On the terminal compile the source code. Please ensure you use the correct gcc l
 ```bash
 make
 ```
+Please ensure that the var JAVA_HOME is set and if LD_LIBRARY_PATH was not set to the current directory, run the following:
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:. 
+```
 ---
 Generate data to sort: the expected arguments are
 
