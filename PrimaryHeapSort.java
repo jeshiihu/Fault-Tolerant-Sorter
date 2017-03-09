@@ -105,7 +105,7 @@ public class PrimaryHeapSort extends Thread
 		float hazard = _failureProb*(float)_memAccess;
  		float randNum = (float)Math.random()*1;
 
- 		if(hazard >= 0.5 && hazard <= (0.5+hazard))
+ 		if(randNum >= 0.5 && randNum <= (0.5+hazard))
 	 		_fail = true;
 	}
 

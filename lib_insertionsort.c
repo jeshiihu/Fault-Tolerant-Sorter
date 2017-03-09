@@ -77,7 +77,7 @@ jboolean checkForFailure(JNIEnv *env, jfloat fp)
 
 	srand(time(NULL));
  	float randNum = ((float)rand()/(float)(RAND_MAX))*1; // 1 indicates max
- 	if(hazard >= 0.5 && hazard <= (0.5+hazard))
+ 	if(randNum >= 0.5 && randNum <= (0.5+hazard))
 		failed = 1;
 
 	return failed;
